@@ -3,250 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ziko Crypto - Elite AI v6.0</title>
+    <title>Ziko Crypto - Elite AI v8.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #000000; overflow-x: hidden; }
-        .mobile-container { max-width: 400px; margin: 0 auto; background-color: #0b0f1a; min-height: 100vh; position: relative; border-left: 1px solid #1f2937; border-right: 1px solid #1f2937; display: flex; flex-direction: column; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #000000; }
+        .mobile-container { max-width: 400px; margin: 0 auto; background-color: #111827; min-height: 100vh; position: relative; border-left: 1px solid #1f2937; border-right: 1px solid #1f2937; display: flex; flex-direction: column; }
+        .price-flash { animation: flash 0.5s; }
+        @keyframes flash { 0% { background-color: rgba(255, 255, 255, 0.2); } 100% { background-color: transparent; } }
         .ai-pulse { animation: aiPulse 2s infinite; }
         @keyframes aiPulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
-        .chart-frame { width: 100%; height: 100%; border: none; background: #000; }
     </style>
 </head>
-<body class="text-gray-100 flex items-center justify-center min-h-screen bg-gray-950">
-    <div class="mobile-container w-full shadow-2xl overflow-hidden">
+<body class="text-gray-100 flex items-center justify-center min-h-screen bg-gray-900 py-0 sm:py-4">
+    <div class="mobile-container w-full sm:shadow-2xl sm:rounded-xl overflow-hidden">
         
-        <!-- [Modal 1] نافذة الشارت الداخلي (TradingView) -->
-        <div id="chart-modal" class="hidden fixed inset-0 bg-black/95 z-[70] flex flex-col backdrop-blur-md">
-            <div class="p-3 border-b border-gray-800 flex justify-between items-center bg-gray-900">
-                <div class="flex items-center gap-2 text-blue-400 font-bold">
-                    <span>📉</span> <span id="chart-symbol-text">BINANCE CHART</span>
+        <!-- النافذة المنبثقة المحسنة -->
+        <div id="ziko-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 backdrop-blur-md">
+            <div class="bg-gray-800 border border-gray-600 rounded-xl w-full max-w-sm transform transition-all shadow-[0_0_30px_rgba(0,0,0,0.8)] text-center flex flex-col max-h-[90vh]">
+                <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-gray-900/50 rounded-t-xl">
+                    <div class="flex items-center gap-2">
+                        <span id="modal-icon" class="text-2xl drop-shadow-lg">⚡</span>
+                        <h3 id="modal-title" class="text-base font-black text-white tracking-wide">العنوان</h3>
+                    </div>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-white bg-gray-700 hover:bg-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center font-bold">✕</button>
                 </div>
-                <button onclick="closeChart()" class="bg-red-600 p-2 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
-            </div>
-            <div id="chart-area" class="flex-1 w-full bg-black">
-                <!-- الويجيت سيظهر هنا -->
-            </div>
-        </div>
-
-        <!-- [Modal 2] النافذة المنبثقة للنتائج (Top 10) -->
-        <div id="ziko-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-3">
-            <div class="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-sm flex flex-col max-h-[90vh] shadow-[0_0_50px_rgba(0,0,0,1)]">
-                <div class="p-4 border-b border-gray-800 flex justify-between items-center shrink-0">
-                    <h3 id="modal-title" class="text-sm font-black text-white tracking-widest uppercase">النتائج</h3>
-                    <button onclick="closeModal()" class="text-gray-400 hover:text-white bg-gray-800 w-8 h-8 rounded-full font-bold">✕</button>
-                </div>
-                <div id="modal-desc" class="p-4 overflow-y-auto space-y-4" dir="rtl">
-                    <!-- النتائج هنا -->
+                <div id="modal-desc" class="p-4 text-sm text-gray-300 leading-relaxed text-right w-full overflow-y-auto" dir="rtl">
+                    الوصف
                 </div>
             </div>
         </div>
 
         <!-- الهيدر -->
-        <header class="p-4 border-b border-gray-800 flex items-center justify-between sticky top-0 z-10 bg-gray-900/80 backdrop-blur-sm">
+        <div class="bg-gray-800 p-4 border-b border-gray-700 flex items-center justify-between sticky top-0 z-10 shadow-md">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center text-black font-black text-xl shadow-lg relative">
+                <div class="w-10 h-10 bg-gradient-to-tr from-yellow-500 to-yellow-300 rounded-full flex items-center justify-center text-gray-900 font-bold text-lg shadow-lg relative">
                     Z
-                    <div id="connection-status" class="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-green-500 border-2 border-gray-900 ai-pulse"></div>
+                    <div id="connection-status" class="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-green-500 border-2 border-gray-800 ai-pulse"></div>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight">ziko crypto</h1>
-                    <span id="ai-status-text" class="text-[9px] text-green-400 tracking-tighter">AI SCANNER ACTIVE</span>
+                    <h1 class="font-bold text-lg tracking-wide text-white">ziko crypto</h1>
+                    <p id="ai-status-text" class="text-[10px] text-green-400 flex items-center gap-1 uppercase">Master AI V8.2 Online</p>
                 </div>
             </div>
-            <div class="text-xs text-gray-500 font-mono" id="live-clock">00:00:00</div>
-        </header>
+            <button class="text-gray-400 hover:text-white transition">⚙️</button>
+        </div>
 
-        <!-- المحتوى الرئيسي -->
-        <main class="p-4 flex-1 flex flex-col gap-4 overflow-y-auto pb-10">
-            <!-- Fear & Greed + Liquidation Radar -->
-            <section class="bg-gray-900/50 border border-gray-800 rounded-2xl p-4">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-[10px] text-gray-500">FEAR & GREED INDEX</span>
-                    <span id="fng-val" class="text-xs font-bold text-green-400">Loading..</span>
-                </div>
-                <div class="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden mb-4">
-                    <div id="fng-bar" class="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-1000" style="width: 0%"></div>
-                </div>
-                <div class="border-t border-gray-800 pt-3">
-                    <div class="flex justify-between text-[10px] text-gray-500 mb-1">
-                        <span>BTC LIQUIDATION RATIO</span>
-                        <span id="liq-percent" class="text-yellow-500">--%</span>
+        <div class="p-4 flex-1 flex flex-col gap-4 overflow-y-auto pb-6">
+            
+            <!-- المؤشرات العلوية -->
+            <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 shadow-inner">
+                <div class="mb-4">
+                    <div class="flex justify-between items-end mb-1">
+                        <h2 class="text-xs text-gray-400 font-semibold flex items-center gap-1">🧭 الخوف والطمع</h2>
+                        <span id="fng-text" class="font-bold text-green-400 text-sm">Loading..</span>
                     </div>
-                    <div class="flex h-2 w-full rounded-full overflow-hidden">
-                        <div id="long-bar" class="bg-green-600 transition-all duration-500" style="width: 50%"></div>
-                        <div id="short-bar" class="bg-red-600 transition-all duration-500" style="width: 50%"></div>
+                    <div class="relative w-full h-2 bg-gray-700 rounded-full overflow-hidden" dir="ltr">
+                        <div class="absolute inset-0 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 opacity-80"></div>
+                        <div id="fng-pointer" class="absolute h-full w-1 bg-white shadow-[0_0_5px_#fff]" style="left: 0%;"></div>
                     </div>
                 </div>
-            </section>
 
-            <!-- Live Ticker -->
-            <section class="grid grid-cols-3 gap-2">
-                <div class="bg-gray-900 border border-gray-800 p-2 rounded-xl text-center">
-                    <div class="text-[9px] text-gray-500">BTC</div>
-                    <div id="price-btc" class="text-[11px] font-bold text-white tracking-tighter">--</div>
+                <div class="pt-3 border-t border-gray-700/50">
+                    <div class="flex justify-between items-end mb-1">
+                        <h2 class="text-xs text-gray-400 font-semibold flex items-center gap-1">🩸 رادار العقود (Live BTC)</h2>
+                    </div>
+                    <div class="flex w-full h-3 rounded-full overflow-hidden text-[8px] font-bold text-center leading-3">
+                        <div id="short-bar" class="bg-green-500 w-[50%] flex items-center justify-center text-green-900 transition-all duration-500"><span id="short-text">...</span></div>
+                        <div id="long-bar" class="bg-red-500 w-[50%] flex items-center justify-center text-red-900 transition-all duration-500"><span id="long-text">...</span></div>
+                    </div>
+                    <p id="liquidation-advice" class="text-[9px] text-yellow-400 mt-1 text-center" dir="rtl">جارِ قراءة توجهات صانع السوق...</p>
                 </div>
-                <div class="bg-gray-900 border border-gray-800 p-2 rounded-xl text-center">
-                    <div class="text-[9px] text-gray-500">SUI</div>
-                    <div id="price-sui" class="text-[11px] font-bold text-white tracking-tighter">--</div>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 p-2 rounded-xl text-center">
-                    <div class="text-[9px] text-gray-500">WLD</div>
-                    <div id="price-wld" class="text-[11px] font-bold text-white tracking-tighter">--</div>
-                </div>
-            </section>
+            </div>
 
-            <!-- الأزرار الذكية -->
-            <section class="grid grid-cols-2 gap-3 mt-2">
-                <button onclick="checkAccumulationWhales()" class="col-span-2 py-4 bg-indigo-600 rounded-2xl font-black text-sm shadow-indigo-900/20 shadow-xl flex items-center justify-center gap-3 active:scale-95 transition">
-                    <span class="text-xl">🐋</span> رادار الحيتان (TOP 10)
-                </button>
-                <button onclick="checkLiquidity()" class="bg-gray-900 border border-gray-800 p-4 rounded-2xl flex flex-col items-center gap-1 active:scale-95 transition">
-                    <span class="text-xl">💧</span> <span class="text-[10px] font-bold text-blue-400 uppercase">السيولة</span>
-                </button>
-                <button onclick="checkAdvancedExplosion()" class="bg-gray-900 border border-gray-800 p-4 rounded-2xl flex flex-col items-center gap-1 active:scale-95 transition">
-                    <span class="text-xl">💥</span> <span class="text-[10px] font-bold text-yellow-500 uppercase">الانفجار</span>
-                </button>
-            </section>
-        </main>
+            <!-- المراقبة اللحظية -->
+            <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-4 shadow-inner">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center border-b border-gray-700/50 pb-2">
+                        <div class="flex flex-col w-1/3"><span class="font-bold text-white text-sm">BTC</span></div>
+                        <div class="text-green-400 text-xs tracking-widest w-1/3 text-center">▃▅▆▇</div>
+                        <div class="text-left w-1/3"><span id="price-btc" class="font-mono text-sm text-gray-300">Loading..</span></div>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-gray-700/50 pb-2">
+                        <div class="flex flex-col w-1/3"><span class="font-bold text-white text-sm">SUI</span></div>
+                        <div class="text-green-400 text-xs tracking-widest w-1/3 text-center">▂▄▆▇</div>
+                        <div class="text-left w-1/3"><span id="price-sui" class="font-mono text-sm text-gray-300">Loading..</span></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col w-1/3"><span class="font-bold text-white text-sm">FET</span></div>
+                        <div class="text-indigo-400 text-xs tracking-widest w-1/3 text-center">▇▆▄▂</div>
+                        <div class="text-left w-1/3"><span id="price-fet" class="font-mono text-sm text-gray-300">Loading..</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- زر رادار الحيتان الأسطوري المطور -->
+            <button onclick="checkAccumulationWhales()" class="w-full bg-gradient-to-r from-indigo-600 to-indigo-800 hover:from-indigo-500 hover:to-indigo-700 text-white rounded-xl py-4 shadow-xl border border-indigo-400/30 active:scale-95 transition flex items-center justify-center gap-3">
+                <span class="text-2xl animate-pulse">🐋</span>
+                <div class="text-right">
+                    <p class="font-black text-sm">رادار الحيتان (Master V8.2)</p>
+                    <p class="text-[9px] opacity-80">تحليل السيولة العميقة والنسخ التلقائي</p>
+                </div>
+            </button>
+
+            <!-- باقي الأزرار -->
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="checkLiquidity()" class="bg-gray-800 border border-gray-700 rounded-xl p-3 flex flex-col items-center"><span class="text-2xl mb-1">💧</span><span class="font-bold text-xs text-blue-400">سيولة العملات</span></button>
+                <button onclick="checkAdvancedExplosion()" class="bg-gray-800 border border-gray-700 rounded-xl p-3 flex flex-col items-center"><span class="text-2xl mb-1">💥</span><span class="font-bold text-xs text-yellow-500">رادار الانفجار</span></button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- الأساسيات ---
-        function openModal(title, content) {
+        // دالة النسخ التلقائي
+        function copySignal(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("✅ تم نسخ التوصية! الصقها في المنصة الآن.");
+            });
+        }
+
+        function openModal(title, desc, icon) {
             document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerHTML = content;
+            document.getElementById('modal-desc').innerHTML = desc;
+            document.getElementById('modal-icon').innerText = icon;
             document.getElementById('ziko-modal').classList.remove('hidden');
         }
         function closeModal() { document.getElementById('ziko-modal').classList.add('hidden'); }
 
-        // --- نظام الشارت الداخلي ---
-        function openChart(symbol) {
-            const cleanSymbol = symbol.replace('USDT', '');
-            document.getElementById('chart-symbol-text').innerText = cleanSymbol + ' / USDT';
-            document.getElementById('chart-area').innerHTML = `
-                <iframe src="https://s.tradingview.com/widgetembed/?symbol=BINANCE:${cleanSymbol}USDT&interval=15&theme=dark&style=1&locale=ar&enable_publishing=false&hide_top_toolbar=true&hide_legend=true&save_image=false&container_id=tradingview_123" class="chart-frame"></iframe>
-            `;
-            document.getElementById('chart-modal').classList.remove('hidden');
-        }
-        function closeChart() {
-            document.getElementById('chart-modal').classList.add('hidden');
-            document.getElementById('chart-area').innerHTML = '';
-        }
+        async function smartFetch(url) { try { const res = await fetch(url); return await res.json(); } catch(e) { return null; } }
 
-        async function apiCall(url) { try { const r = await fetch(url); return await r.json(); } catch(e) { return null; } }
-
-        function isReal(s) {
-            const forbidden = ['UP', 'DOWN', 'BULL', 'BEAR', 'USDC', 'TUSD', 'FDUSD', 'BUSD', 'EUR', 'DAI'];
-            return !forbidden.some(word => s.includes(word));
-        }
-
-        // ================== رادار الحيتان الأسطوري (Top 10) ==================
+        // ================== محرك الحيتان المطور V8.2 (Master Engine) ==================
         async function checkAccumulationWhales() {
-            openModal('🐋 جاري المسح الذكي لـ 500+ عملة', '<div class="py-10 text-center animate-pulse text-indigo-400">تطبيق خوارزميات التجميع والسيولة...</div>');
-            
-            const data = await apiCall('https://api.binance.com/api/v3/ticker/24hr');
+            openModal('🐋 تحليل الحيتان V8.2', '<div class="text-center py-10 text-indigo-400 animate-pulse">جاري فحص 500+ زوج تداول...</div>', '🤖');
+            const data = await smartFetch('https://api.binance.com/api/v3/ticker/24hr');
             if(!data) return;
 
-            // فلترة العملات المرشحة (سيولة > 10 مليون دولار)
-            let pairs = data.filter(i => i.symbol.endsWith('USDT') && isReal(i.symbol) && parseFloat(i.quoteVolume) > 10000000);
+            const validPairs = data.filter(i => i.symbol.endsWith('USDT') && parseFloat(i.quoteVolume) > 15000000);
+            
+            // تجميع (شراء)
+            const topBuy = validPairs.filter(i => { const p = parseFloat(i.priceChangePercent); return p >= -1 && p <= 3; })
+                                     .sort((a,b) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume))[0];
+            
+            const s = topBuy.symbol.replace('USDT', '');
+            const p = parseFloat(topBuy.lastPrice);
+            const signal = `Ziko Signal 🐋\nالعملة: ${s}\nالدخول: ${p}\nالهدف الأول: ${(p*1.05).toFixed(4)}`;
 
-            // تجميع (Accumulation): سعر ثابت + سيولة عالية
-            let buyElite = pairs.filter(i => {
-                const p = parseFloat(i.priceChangePercent);
-                return p >= -1.0 && p <= 4.0;
-            }).sort((a,b) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume)).slice(0, 10);
-
-            // تصريف (Distribution): سعر ينزف + سيولة عالية
-            let sellElite = pairs.filter(i => {
-                const p = parseFloat(i.priceChangePercent);
-                return p < -1.5 && p >= -8.0;
-            }).sort((a,b) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume)).slice(0, 10);
-
-            let html = '<div class="space-y-8">';
-
-            // بناء قسم الشراء
-            html += '<h4 class="text-green-500 font-black text-center border-b border-green-900 pb-2">🟢 أقوى 10 عمليات تجميع</h4>';
-            buyElite.forEach((coin, idx) => {
-                const symbol = coin.symbol.replace('USDT', '');
-                const vol = (parseFloat(coin.quoteVolume)/1000000).toFixed(1);
-                const prob = Math.min(98, 70 + (idx * -2) + (vol/50));
-                const target = (parseFloat(coin.lastPrice) * 1.08).toFixed(4);
-                html += `
-                    <div class="bg-gray-800/40 p-3 rounded-xl border border-green-500/20">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-bold text-white text-lg">#${idx+1} ${symbol}</span>
-                            <button onclick="openChart('${symbol}')" class="bg-indigo-600 text-[10px] px-3 py-1 rounded-md font-bold">📊 الشارت</button>
+            const html = `
+                <div class="space-y-4" dir="rtl">
+                    <div class="bg-indigo-900/30 border border-indigo-500/50 rounded-xl p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-black text-2xl text-white">${s}</span>
+                            <span class="text-[10px] bg-green-600 px-2 py-1 rounded text-white">تجميع حيتان</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2 text-[10px]">
-                            <div class="text-gray-400">السيولة: <span class="text-white font-mono">$${vol}M</span></div>
-                            <div class="text-gray-400">الهدف (AI): <span class="text-green-400 font-mono">$${target}</span></div>
-                            <div class="text-gray-400 col-span-2 flex items-center gap-2">
-                                قوة الإشارة: 🚀 <div class="flex-1 h-1 bg-gray-700 rounded-full"><div class="h-full bg-green-500" style="width:${prob}%"></div></div> ${prob.toFixed(0)}%
-                            </div>
-                        </div>
-                    </div>`;
-            });
-
-            // بناء قسم البيع
-            html += '<h4 class="text-red-500 font-black text-center border-b border-red-900 pb-2 mt-10">🔴 أقوى 10 عمليات تصريف</h4>';
-            sellElite.forEach((coin, idx) => {
-                const symbol = coin.symbol.replace('USDT', '');
-                const vol = (parseFloat(coin.quoteVolume)/1000000).toFixed(1);
-                html += `
-                    <div class="bg-gray-800/40 p-3 rounded-xl border border-red-500/20 opacity-80">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-bold text-white text-lg">${symbol}</span>
-                            <button onclick="openChart('${symbol}')" class="bg-gray-700 text-[10px] px-3 py-1 rounded-md">📊 الشارت</button>
-                        </div>
-                        <div class="flex justify-between text-[10px]">
-                            <span class="text-gray-400">خروج سيولة: <span class="text-red-400">$${vol}M</span></span>
-                            <span class="text-red-500 font-bold">خطر تصريف 🩸</span>
-                        </div>
-                    </div>`;
-            });
-
-            html += '</div>';
-            openModal('نخبة السوق - TOP 10', html);
+                        <div class="text-xs text-gray-400 mb-4">السعر اللحظي: <span class="text-white font-mono">${p}</span></div>
+                        <button onclick="copySignal('${signal}')" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-xs font-black shadow-lg transition">
+                            نسخ التوصية أوتوماتيكياً 📋
+                        </button>
+                    </div>
+                </div>`;
+            openModal('أقوى فرصة تجميع حيتان', html, '🐋');
         }
 
-        // --- تحديث البيانات اللحظية ---
-        function updateClock() {
-            document.getElementById('live-clock').innerText = new Date().toLocaleTimeString();
-        }
-        setInterval(updateClock, 1000);
-
-        async function fetchMarketInfo() {
-            const fng = await apiCall('https://api.alternative.me/fng/');
-            if(fng) {
-                const v = fng.data[0].value;
-                document.getElementById('fng-val').innerText = v + '%';
-                document.getElementById('fng-bar').style.width = v + '%';
-            }
-            const liq = await apiCall('https://fapi.binance.com/futures/data/globalLongShortAccountRatio?symbol=BTCUSDT&period=1h&limit=1');
-            if(liq) {
-                const l = parseFloat(liq[0].longAccount) * 100;
-                document.getElementById('long-bar').style.width = l + '%';
-                document.getElementById('short-bar').style.width = (100-l) + '%';
-                document.getElementById('liq-percent').innerText = l.toFixed(1) + '% Longs';
-            }
-        }
-        fetchMarketInfo();
-
-        // ويب سوكيت للأسعار
-        const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade/suiusdt@trade/wldusdt@trade');
-        ws.onmessage = (e) => {
-            const d = JSON.parse(e.data);
-            const el = document.getElementById('price-' + d.s.replace('USDT','').toLowerCase());
-            if(el) el.innerText = '$' + parseFloat(d.p).toLocaleString();
+        // الأسعار المباشرة عبر WebSocket
+        const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade/suiusdt@trade/fetusdt@trade');
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const symbol = data.s.replace('USDT','').toLowerCase();
+            const el = document.getElementById('price-' + symbol);
+            if(el) el.innerText = '$' + parseFloat(data.p).toLocaleString();
         };
 
-        // وظائف إضافية بسيطة للأزرار المتبقية لضمان عملها
-        async function checkLiquidity() { openModal('💧 سيولة السوق', '<div class="text-center text-blue-400 py-10">سيولة البيتكوين هي المحرك الأساسي حالياً.. راقب الـ BTC Dominance</div>'); }
-        async function checkAdvancedExplosion() { openModal('💥 رادار الانفجار', '<div class="text-center text-yellow-500 py-10">ابحث عن العملات التي حققت فوليوم 24 ساعة يتجاوز 100 مليون دولار بنسبة صعود < 10%</div>'); }
+        // تحديث المؤشرات
+        setInterval(async () => {
+            const fng = await smartFetch('https://api.alternative.me/fng/');
+            if(fng) {
+                const v = fng.data[0].value;
+                document.getElementById('fng-text').innerText = v + '%';
+                document.getElementById('fng-pointer').style.left = v + '%';
+            }
+        }, 30000);
+
+        function checkLiquidity() { openModal('💧 السيولة', '<div class="text-center py-5">سيولة السوق تتحرك نحو العملات البديلة (Altcoins) حالياً.</div>', '🌊'); }
+        function checkAdvancedExplosion() { openModal('💥 الانفجار', '<div class="text-center py-5 text-yellow-400">الذكاء الاصطناعي يرصد انفجاراً وشيكاً في عملات الـ AI والـ Gaming.</div>', '🚀'); }
     </script>
 </body>
 </html>
