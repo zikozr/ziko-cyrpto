@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ziko Crypto - Elite AI v8.6 Live Engine</title>
+    <title>Ziko Crypto - Elite AI v9.0 Tri-Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
@@ -11,7 +11,7 @@
         .mobile-container { max-width: 400px; margin: 0 auto; background-color: #111520; min-height: 100vh; position: relative; border-left: 1px solid #1f2937; border-right: 1px solid #1f2937; display: flex; flex-direction: column; }
         .ai-pulse { animation: aiPulse 2s infinite; }
         @keyframes aiPulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
-        .glass-panel { background-color: #24293f; border: 1px solid rgba(255, 255, 255, 0.02); transition: all 0.3s ease; }
+        .glass-panel { background-color: #24293f; border: 1px solid rgba(255, 255, 255, 0.02); }
         .text-neon-cyan { color: #00e7c5; }
         .bg-neon-cyan { background-color: #00e7c5; }
         .bg-neon-orange { background-color: #ffb703; }
@@ -20,20 +20,8 @@
 </head>
 <body class="text-gray-100 flex items-center justify-center min-h-screen bg-gray-900 py-0 sm:py-4">
     <div class="mobile-container w-full sm:shadow-2xl sm:rounded-xl overflow-hidden overflow-y-auto">
-        
-        <div id="ziko-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 backdrop-blur-md">
-            <div class="bg-gray-800 border border-gray-600 rounded-xl w-full max-w-sm transform transition-all shadow-[0_0_30px_rgba(0,0,0,0.8)] text-center flex flex-col max-h-[90vh]">
-                <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-gray-900/50 rounded-t-xl">
-                    <div class="flex items-center gap-2">
-                        <span id="modal-icon" class="text-2xl drop-shadow-lg">⚡</span>
-                        <h3 id="modal-title" class="text-base font-black text-white tracking-wide">العنوان</h3>
-                    </div>
-                    <button onclick="closeModal()" class="text-gray-400 hover:text-white bg-gray-700 hover:bg-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center font-bold">✕</button>
-                </div>
-                <div id="modal-desc" class="p-4 text-sm text-gray-300 leading-relaxed text-right w-full overflow-y-auto" dir="rtl"></div>
-            </div>
-        </div>
 
+        <!-- الهيدر -->
         <div class="bg-gray-800 p-4 border-b border-gray-700 flex items-center justify-between sticky top-0 z-10 shadow-md">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-gradient-to-tr from-yellow-500 to-yellow-300 rounded-full flex items-center justify-center text-gray-900 font-bold text-lg shadow-lg relative">
@@ -42,7 +30,7 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-lg tracking-wide text-white">ziko crypto</h1>
-                    <p id="ai-status-text" class="text-[10px] text-green-400 flex items-center gap-1 uppercase font-mono">Live Data Engine</p>
+                    <p class="text-[10px] text-green-400 flex items-center gap-1 uppercase font-mono">Aggregator V9.0 Online</p>
                 </div>
             </div>
             <button class="text-gray-400 hover:text-white transition">⚙️</button>
@@ -50,37 +38,39 @@
 
         <div class="p-4 flex-1 flex flex-col gap-4 overflow-y-auto pb-6">
             
+            <!-- شريط الأخبار اللحظي -->
             <div class="bg-gray-800/80 border border-gray-700 rounded-full px-4 py-2 flex items-center gap-2 shadow-sm overflow-hidden mb-1">
                 <span class="text-red-500 animate-pulse text-sm">🔥</span>
                 <marquee id="alert-marquee" class="text-[11px] text-gray-300 font-medium" direction="right" scrollamount="4">
-                    جاري تحميل البيانات الحية من السيرفرات العالمية...
+                    اتصال مشفر ومباشر مع سيرفرات Coinbase و Binance... ⏳
                 </marquee>
             </div>
 
+            <!-- المؤشرات الاحترافية الأربعة (التصميم القديم بمحركات جديدة) -->
             <div class="grid grid-cols-4 gap-1.5 pb-1" dir="rtl">
                 
-                <!-- 1. الخوف والطمع -->
+                <!-- 1. حرارة العقود (الدائرة) -->
                 <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center justify-center shadow-lg relative h-28">
-                    <span class="text-[8px] text-panel-title font-bold mb-3 z-10 text-center flex items-center gap-1 whitespace-nowrap">مؤشر الخوف والطمع</span>
+                    <span class="text-[8px] text-panel-title font-bold mb-3 z-10 text-center flex items-center gap-1 whitespace-nowrap">عقود الشراء (Longs)</span>
                     <div class="relative w-16 h-16 flex items-center justify-center z-10 mt-1">
                         <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                             <path class="text-[#3b415a]" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="100, 100" />
-                            <path id="fng-svg-bar" class="text-blue-500 transition-all duration-1000" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#fng-grad-perfect)" stroke-width="3.5" stroke-dasharray="0, 100" stroke-linecap="round" />
+                            <path id="heat-svg-bar" class="text-blue-500 transition-all duration-1000" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#heat-grad-perfect)" stroke-width="3.5" stroke-dasharray="0, 100" stroke-linecap="round" />
                             <defs>
-                                <linearGradient id="fng-grad-perfect" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <linearGradient id="heat-grad-perfect" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" stop-color="#ff4747" />
                                     <stop offset="50%" stop-color="#ffb703" />
                                     <stop offset="100%" stop-color="#00e7c5" />
                                 </linearGradient>
                             </defs>
                         </svg>
-                        <div id="fng-text-circle" class="absolute text-sm font-black text-white">--</div>
+                        <div id="heat-text-circle" class="absolute text-[13px] font-black text-white">--%</div>
                     </div>
                 </div>
 
-                <!-- 2. مؤشر العملات الرقمية (الذكاء الاصطناعي) -->
+                <!-- 2. توازن السوق (الشريط) -->
                 <div class="glass-panel rounded-xl p-2 flex flex-col items-center justify-center shadow-lg h-28">
-                    <span class="text-[8px] text-panel-title font-bold mb-3 z-10 text-center whitespace-nowrap overflow-hidden text-ellipsis w-full">مؤشر العملات الرقمية..</span>
+                    <span class="text-[8px] text-panel-title font-bold mb-3 z-10 text-center whitespace-nowrap overflow-hidden text-ellipsis w-full">توازن السوق (AI)</span>
                     <div class="text-white font-black text-[17px] mb-2.5 tracking-wider"><span id="ai-index-val">--</span><span class="text-gray-400 text-sm">/100</span></div>
                     <div class="w-11/12 h-1.5 flex rounded-full relative items-center" dir="ltr">
                         <div id="ai-bar-cyan" class="h-full bg-neon-cyan rounded-l-full transition-all duration-1000" style="width: 50%;"></div>
@@ -89,21 +79,21 @@
                     </div>
                 </div>
 
-                <!-- 3. CMC20 -->
+                <!-- 3. بريميوم كوين بيس 🇺🇸 -->
                 <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center justify-center shadow-lg h-28 text-center">
-                    <span class="text-[9px] text-panel-title font-bold mb-3">Top 20</span>
-                    <div id="cmc-val" class="text-neon-cyan font-black text-base mb-1 tracking-wider">--</div>
-                    <div id="cmc-change-container" class="text-[10px] text-neon-cyan font-bold flex items-center justify-center gap-0.5">
-                        <span id="cmc-change">--</span>% <span id="cmc-arrow" class="text-[8px]"></span>
+                    <span class="text-[8px] text-panel-title font-bold mb-3 whitespace-nowrap">بريميوم أمريكا 🇺🇸</span>
+                    <div id="cb-premium-val" class="text-neon-cyan font-black text-sm mb-1 tracking-wider">--</div>
+                    <div class="text-[9px] text-gray-400 font-bold flex items-center justify-center gap-0.5">
+                        فارق السعر (BTC)
                     </div>
                 </div>
 
-                <!-- 4. القيمة السوقية -->
+                <!-- 4. السيولة اللحظية (Tri-Volume) -->
                 <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center justify-center shadow-lg h-28 text-center">
-                    <span class="text-[9px] text-panel-title font-bold mb-3">القيمة السوقية</span>
-                    <div id="mcap-val" class="text-white font-black text-base mb-1 tracking-wider">--</div>
-                    <div id="mcap-change-container" class="text-[10px] text-neon-cyan font-bold flex items-center justify-center gap-0.5">
-                        <span id="mcap-change">--</span>% <span id="mcap-arrow" class="text-[8px]"></span>
+                    <span class="text-[8px] text-panel-title font-bold mb-3 whitespace-nowrap">السيولة (24h)</span>
+                    <div id="tri-vol-val" class="text-white font-black text-sm mb-1 tracking-wider">--</div>
+                    <div id="vol-change-container" class="text-[9px] text-gray-400 font-bold flex items-center justify-center gap-0.5">
+                        مليار دولار
                     </div>
                 </div>
 
@@ -130,35 +120,28 @@
                 </div>
             </div>
 
+            <!-- الأزرار السفلية (للمعايرة) -->
             <div class="mt-4">
                 <div class="grid grid-cols-2 gap-3">
-                    <button onclick="checkLiquidity()" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 transition rounded-xl p-3 flex flex-col items-center text-center"><span class="text-2xl mb-1 drop-shadow-md">💧</span><span class="font-bold text-xs text-blue-400">سيولة العملات</span></button>
-                    <button onclick="checkAccumulationWhales()" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 transition rounded-xl p-3 flex flex-col items-center text-center shadow-[0_0_15px_rgba(99,102,241,0.2)]"><span class="text-2xl mb-1 drop-shadow-md">🐋</span><span class="font-bold text-xs text-indigo-400">الحيتان (الخبير)</span></button>
-                    <button onclick="checkAdvancedExplosion()" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 transition rounded-xl p-3 flex flex-col items-center text-center"><span class="text-2xl mb-1 drop-shadow-md">💥</span><span class="font-bold text-xs text-yellow-500">قيد الانفجار</span></button>
-                    <button onclick="checkHunting()" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 transition rounded-xl p-3 flex flex-col items-center text-center relative overflow-hidden group"><div class="absolute inset-0 bg-red-500/10 opacity-0 group-hover:opacity-100 transition"></div><span class="text-2xl mb-1 drop-shadow-md">🎯</span><span class="font-bold text-xs text-red-400">رادار الصيد</span></button>
+                    <button onclick="alert('زر السيولة: في انتظار أمرك للبرمجة...')" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 transition rounded-xl p-3 flex flex-col items-center text-center"><span class="text-2xl mb-1 drop-shadow-md">💧</span><span class="font-bold text-xs text-blue-400">سيولة العملات</span></button>
+                    <button onclick="alert('زر الحيتان: في انتظار أمرك للبرمجة...')" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 transition rounded-xl p-3 flex flex-col items-center text-center shadow-[0_0_15px_rgba(99,102,241,0.2)]"><span class="text-2xl mb-1 drop-shadow-md">🐋</span><span class="font-bold text-xs text-indigo-400">الحيتان (الخبير)</span></button>
+                    <button onclick="alert('زر الانفجار: في انتظار أمرك للبرمجة...')" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 transition rounded-xl p-3 flex flex-col items-center text-center"><span class="text-2xl mb-1 drop-shadow-md">💥</span><span class="font-bold text-xs text-yellow-500">قيد الانفجار</span></button>
+                    <button onclick="alert('زر رادار الصيد: في انتظار أمرك للبرمجة...')" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 transition rounded-xl p-3 flex flex-col items-center text-center relative overflow-hidden group"><div class="absolute inset-0 bg-red-500/10 opacity-0 group-hover:opacity-100 transition"></div><span class="text-2xl mb-1 drop-shadow-md">🎯</span><span class="font-bold text-xs text-red-400">رادار الصيد</span></button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function copySignal(text) { navigator.clipboard.writeText(text).then(() => { alert("✅ تم نسخ التوصية! الصقها في المنصة الآن."); }); }
-        function openModal(title, desc, icon) { document.getElementById('modal-title').innerText = title; document.getElementById('modal-desc').innerHTML = desc; document.getElementById('modal-icon').innerText = icon; document.getElementById('ziko-modal').classList.remove('hidden'); }
-        function closeModal() { document.getElementById('ziko-modal').classList.add('hidden'); }
-        async function smartFetch(url) { try { const res = await fetch(url); return await res.json(); } catch(e) { return null; } }
-
-        // محرك الحيتان
-        async function checkAccumulationWhales() {
-            openModal('🐋 تحليل الحيتان المتقدم', '<div class="text-center text-indigo-400 animate-pulse mt-10 mb-10 text-lg">الذكاء الاصطناعي يقوم بحسابات معقدة الآن... ⏳</div>', '🤖');
-            const data = await smartFetch('https://api.binance.com/api/v3/ticker/24hr');
-            if(!data) return;
-            const validPairs = data.filter(i => i.symbol.endsWith('USDT') && parseFloat(i.quoteVolume) > 15000000 && i.symbol !== 'BTCUSDT');
-            const topBuy = validPairs.filter(i => { const p = parseFloat(i.priceChangePercent); return p >= -1 && p <= 3; }).sort((a,b) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume))[0];
-            const s = topBuy.symbol.replace('USDT', '');
-            const price = parseFloat(topBuy.lastPrice);
-            const signalText = `Ziko Signal 🐋\nالعملة: ${s}\nالدخول: ${price}\nالهدف الأول: ${(price*1.05).toFixed(4)}`;
-            const advancedHTML = `<div class="space-y-4 pb-2" dir="rtl"><div class="bg-gray-900 border border-indigo-500/50 rounded-xl overflow-hidden shadow-lg relative"><div class="bg-indigo-900/40 px-3 py-2 border-b border-indigo-500/30 flex justify-between items-center"><span class="text-indigo-400 font-bold text-sm flex items-center gap-1">🟢 تجميع حيتان (V8.2)</span><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span></span></div><div class="p-4 space-y-3"><div class="text-xs text-gray-400 mb-0.5">الزوج في المنصة: <span class="font-black text-xl text-white tracking-wider">${s}</span><span class="text-xs text-gray-500">/USDT</span></div><div class="flex justify-between items-center bg-gray-950 p-2 rounded"><span class="text-gray-400 text-xs">السعر اللحظي:</span><span class="text-white font-mono text-sm">${price}</span></div><button onclick="copySignal('${signalText}')" class="w-full mt-2 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-xs font-black shadow-lg transition">نسخ التوصية أوتوماتيكياً 📋</button></div></div></div>`;
-            openModal('نخبة تجميع السوق', advancedHTML, '');
+        // دالة جلب سريعة (بدون كاش) لضمان البيانات الحية
+        async function smartFetch(url) { 
+            try { 
+                const res = await fetch(url, { cache: "no-store" }); 
+                if(!res.ok) return null;
+                return await res.json(); 
+            } catch(e) { 
+                return null; 
+            } 
         }
 
         // الأسعار المباشرة WebSocket
@@ -170,23 +153,40 @@
             if(el) el.innerText = '$' + parseFloat(data.p).toLocaleString();
         };
 
-        // تحديث مؤشرات لوحة القيادة (Data Engine)
-        async function updateDashboardData() {
-            // 1. الخوف والطمع
-            const fng = await smartFetch('https://api.alternative.me/fng/');
-            if(fng) {
-                const v = fng.data[0].value;
-                document.getElementById('fng-text-circle').innerText = v;
-                document.getElementById('fng-svg-bar').setAttribute('stroke-dasharray', `${v}, 100`);
+        // المحرك الجديد للمؤشرات الأربعة (V9.0)
+        async function updateDashboardIndicators() {
+            
+            // 1. بريميوم كوين بيس 🇺🇸 (يقارن السعر بين أمريكا وباينانس)
+            const cbRes = await smartFetch('https://api.coinbase.com/v2/prices/BTC-USD/spot');
+            const bnRes = await smartFetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+            
+            if(cbRes && bnRes) {
+                const cbPrice = parseFloat(cbRes.data.amount);
+                const bnPrice = parseFloat(bnRes.price);
+                const premium = cbPrice - bnPrice;
+                
+                const premiumEl = document.getElementById('cb-premium-val');
+                premiumEl.innerText = premium >= 0 ? `+$${premium.toFixed(1)}` : `-$${Math.abs(premium).toFixed(1)}`;
+                premiumEl.className = premium >= 0 ? "text-neon-cyan font-black text-sm mb-1 tracking-wider" : "text-red-500 font-black text-sm mb-1 tracking-wider";
+                
+                // تحديث الماركيز بناءً على شراء الأمريكان
+                const marquee = document.getElementById('alert-marquee');
+                if(premium > 10) marquee.innerText = `🔥 المؤسسات الأمريكية (Coinbase) تشتري البيتكوين بعلاوة سعرية! سيطرة شرائية قوية..`;
+                else if(premium < -10) marquee.innerText = `🩸 ضغط بيعي من أمريكا! سعر البيتكوين في Coinbase أقل من السوق العالمي..`;
+                else marquee.innerText = `⚖️ استقرار في فروقات الأسعار بين المنصات العالمية (Binance - Coinbase)..`;
             }
 
-            // 2. مؤشرات السوق من Binance (AI Index & Top 20)
-            const bnbData = await smartFetch('https://api.binance.com/api/v3/ticker/24hr');
-            if(bnbData) {
-                const usdtPairs = bnbData.filter(i => i.symbol.endsWith('USDT') && parseFloat(i.quoteVolume) > 10000000);
-                usdtPairs.sort((a,b) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume));
+            // 2. توازن السوق والسيولة اللحظية
+            const tickerRes = await smartFetch('https://api.binance.com/api/v3/ticker/24hr');
+            if(tickerRes) {
+                const usdtPairs = tickerRes.filter(i => i.symbol.endsWith('USDT'));
                 
-                // حساب مؤشر الكريبتو (الذكاء الاصطناعي): نسبة العملات المرتفعة من أفضل 100 عملة
+                // السيولة اللحظية (بليون دولار)
+                const totalVol = usdtPairs.reduce((sum, p) => sum + parseFloat(p.quoteVolume), 0);
+                document.getElementById('tri-vol-val').innerText = `$${(totalVol / 1e9).toFixed(2)}B`;
+                
+                // توازن السوق AI
+                usdtPairs.sort((a,b) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume));
                 const top100 = usdtPairs.slice(0, 100);
                 const positiveCoins = top100.filter(i => parseFloat(i.priceChangePercent) > 0).length;
                 
@@ -194,45 +194,21 @@
                 document.getElementById('ai-bar-cyan').style.width = `${positiveCoins}%`;
                 document.getElementById('ai-bar-orange').style.width = `${100 - positiveCoins}%`;
                 document.getElementById('ai-dot').style.left = `${positiveCoins}%`;
-
-                // حساب متوسط Top 20 (بديل CMC20)
-                const top20 = usdtPairs.slice(0, 20);
-                const avgChange = top20.reduce((acc, curr) => acc + parseFloat(curr.priceChangePercent), 0) / 20;
-                const mockIndexPrice = (130 + avgChange).toFixed(2); // سعر تقديري للمؤشر
-                
-                document.getElementById('cmc-val').innerText = `$${mockIndexPrice}`;
-                document.getElementById('cmc-change').innerText = Math.abs(avgChange).toFixed(2);
-                document.getElementById('cmc-arrow').innerText = avgChange >= 0 ? '▲' : '▼';
-                document.getElementById('cmc-change-container').className = avgChange >= 0 ? "text-[10px] text-neon-cyan font-bold flex items-center justify-center gap-0.5" : "text-[10px] text-red-500 font-bold flex items-center justify-center gap-0.5";
             }
 
-            // 3. القيمة السوقية (Market Cap) من CoinGecko
-            const cgData = await smartFetch('https://api.coingecko.com/api/v3/global');
-            if(cgData && cgData.data) {
-                const totalCap = cgData.data.total_market_cap.usd;
-                const mcapTrillions = (totalCap / 1e12).toFixed(2);
-                const mcapChange = cgData.data.market_cap_change_percentage_24h_usd;
-                
-                document.getElementById('mcap-val').innerText = `$${mcapTrillions}T`;
-                document.getElementById('mcap-change').innerText = Math.abs(mcapChange).toFixed(2);
-                document.getElementById('mcap-arrow').innerText = mcapChange >= 0 ? '▲' : '▼';
-                document.getElementById('mcap-change-container').className = mcapChange >= 0 ? "text-[10px] text-neon-cyan font-bold flex items-center justify-center gap-0.5" : "text-[10px] text-red-500 font-bold flex items-center justify-center gap-0.5";
-                
-                // تحديث شريط التنبيهات بناءً على السوق
-                const marquee = document.getElementById('alert-marquee');
-                if(mcapChange > 1) marquee.innerText = `سيولة قوية تدخل السوق الآن! القيمة السوقية ترتفع بنسبة ${mcapChange.toFixed(2)}% 🚀`;
-                else if (mcapChange < -1) marquee.innerText = `حذارِ! خروج سيولة من السوق.. القيمة السوقية تنخفض بنسبة ${Math.abs(mcapChange).toFixed(2)}% 🩸`;
-                else marquee.innerText = `السوق يمر بمرحلة تجميع وتذبذب أفقي.. راقب رادار الحيتان لاصطياد الفرص 🐋`;
+            // 3. حرارة العقود الآجلة (Longs Ratio من باينانس فيوتشرز)
+            const lsRes = await smartFetch('https://fapi.binance.com/futures/data/globalLongShortAccountRatio?symbol=BTCUSDT&period=5m&limit=1');
+            if(lsRes && lsRes.length > 0) {
+                const longs = (parseFloat(lsRes[0].longAccount) * 100).toFixed(0);
+                document.getElementById('heat-text-circle').innerText = longs + '%';
+                document.getElementById('heat-svg-bar').setAttribute('stroke-dasharray', `${longs}, 100`);
             }
         }
 
-        // تشغيل المحرك عند فتح المنصة وتحديثه كل 60 ثانية
-        updateDashboardData();
-        setInterval(updateDashboardData, 60000);
+        // تشغيل فوري وتحديث كل 15 ثانية
+        setTimeout(updateDashboardIndicators, 500);
+        setInterval(updateDashboardIndicators, 15000);
 
-        function checkLiquidity() { alert('جارِ معايرة خرائط السيولة...'); }
-        function checkAdvancedExplosion() { alert('جارِ معايرة رادار الانفجار...'); }
-        function checkHunting() { alert('جارِ معايرة رادار الصيد...'); }
     </script>
 </body>
 </html>
